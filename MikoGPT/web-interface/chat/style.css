@@ -1,0 +1,106 @@
+html{
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(153deg, rgb(121, 17, 95) 0%, rgba(110,23,169,1) 34%, rgba(56,64,99,1) 69%, rgb(8, 82, 97) 100%);
+}
+body{
+    margin: 0;
+    font-size: 20px;
+}
+button{
+    border-radius: 0.5em;
+}
+.container{
+    background-color: #333232;
+    width: min(600px, 100vw);
+    height: 80vh;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2vh;
+    margin-bottom: auto;
+    border-radius: 0.5em;
+    
+}
+.container .input{
+    display: flex;
+    align-items: center;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.container .input input{
+    width: 80%;
+    background-color: #60ddb4;
+    height: 2em;
+    border: none;
+    border-radius: 0.65em;
+    color: black;
+    font-size: 20px;
+    padding-left: 0.5em;
+}
+.container .input input::placeholder{
+    color:rgb(56, 56, 56)
+}
+.container .input input:focus{
+    outline-style: outset;
+}
+.container .input button{
+    width: 20%;
+    height: 30px;
+    font-size: 20px;
+    height: 2em;
+    margin-left: 1em;
+}
+.container .messages .message.right{
+    background-color: rgb(61, 178, 194);
+    margin-left: auto;
+}
+.container .messages .message.left{
+    background-color: rgb(180, 58, 196);
+}
+.container .messages .message {
+    display: flex;
+    border-radius: 1em;
+    padding: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: 1em;
+    margin-right: 1em;
+    margin-top: 1em;
+    min-width: 50%;
+    max-width: 80%;
+    width: fit-content;
+    overflow: hidden;
+}
+.container .messages{
+    height: calc(100% - 60px);
+    overflow-y: scroll;
+}
+.container .messages::-webkit-scrollbar{
+    display: none;
+}
+
+a.header{
+    font-size: 3em;
+    color: #c88be4;
+    text-align: center;
+    display: block;
+    text-shadow: 0.15em 0.15em 0.1em #1a1a1a8f;
+    text-decoration: none;
+    margin-top: 0.3em;
+    font-weight: bold;
+    letter-spacing: 0.2rem;
+}
+
+.credits{
+    --text-color: rgba(75, 234, 245, 0.514);
+    width: min(600px, 100vw);
+    position: absolute;
+    margin-left: calc((100vw - min(600px, 100vw)) / 2);
+    bottom: 1em;
+    margin-top: auto;
+    color: var(--text-color);
+    
+}
+.credits a{
+    color:var(--text-color);
+}

@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Configurations>Debug;Release;LocalServer</Configurations>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="voicevox_core.dll" />
+    <None Remove="voicevox_core.dll.exp" />
+    <None Remove="voicevox_core.dll.lib" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="voicevox_core.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="voicevox_core.dll.exp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="voicevox_core.dll.lib">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VoiceVox\Voicevox.csproj" />
+  </ItemGroup>
+
+</Project>

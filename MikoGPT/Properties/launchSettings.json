@@ -1,0 +1,16 @@
+{
+  "profiles": {
+    "MikoGPT": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "server": "mikogpt.ru"
+      }
+    },
+    "LocalServer": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "server": "host.mikogpt.ru"
+      }
+    }
+  }
+}
