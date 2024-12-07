@@ -21,6 +21,27 @@ if (chatPeerId != null)
 
 
 Console.WriteLine("пон");
+var users = new long[] { 317051088, 216726077 };
+var keyboard = (long? userIdForKick) => new MessageKeyboard()
+{
+    Inline = true,
+    Buttons = new MessageKeyboardButton[][]
+    {
+        new MessageKeyboardButton[]
+        {
+            new()
+            {
+                Color = KeyboardButtonColor.Negative,
+                Action = new()
+                {
+                    Type = KeyboardButtonActionType.Text,
+                    Label = "Кикнуть",
+                    Payload = userIdForKick.ToString()
+                }
+            }
+        }
+    }
+};
 
 while (true)
 {
@@ -53,23 +74,34 @@ while (true)
                 {
                     var msg = msgNew.Message;
 
-                    if (msg.Text == "///here" /*&& new long[] { 216726077 }.Contains((long)msg.FromId)*/)
+                    if (msg.Text == "///here" && users.Contains(msg.FromId ?? throw new()))
                     {
-                        chatPeerId = msg.PeerId; File.WriteAllText("key.txt", chatPeerId.ToString());
+                        chatPeerId = msg.PeerId ?? throw new(); 
+                        File.WriteAllText("key.txt", chatPeerId.ToString());
+
                         whiteList = api.Messages.GetConversationMembers(chatPeerId.Value).Items.ForEachCopy((val) => val.MemberId).ToList();
                         DeleteMessage(msg.ConversationMessageId ?? 0, msg.PeerId ?? 0);
                     }
                     if (chatPeerId == msg.PeerId)
                     {
-                        if (!whiteList.Contains((long)msg.FromId))
+                        if (!whiteList?.Contains(msg.FromId ?? throw new()) ?? false)
                         {
                             //var result = api.Messages.Delete(conversationMessageIds: new ulong[] {(ulong)msg.ConversationMessageId}, peerId: (ulong)msg.PeerId, deleteForAll: true);
                             DeleteMessage(msg.ConversationMessageId ?? 0, msg.PeerId ?? 0);
-                            api.SendMessage($"новое сообщение от [id{msg.FromId}|чел]:\n{msg.Text}", 317051088);
-                            whiteList.Add((long)msg.FromId);
+                            whiteList?.Add(msg.FromId ?? 0);
                             Console.WriteLine(msg.Text);
+
+                            users.Select(id => api.SendMessage($"новое сообщение от [id{msg.FromId}|чела]:\n{msg.Text}", id, messageKeyboard: keyboard(msg.FromId)));
                         }
                     }
+                }
+                else if (i.Instance is MessageEvent msgEvent)
+                {
+                    try
+                    {
+                        var id = long.Parse(msgEvent.Payload);
+                        api.Messages.RemoveChatUser((ulong)((chatPeerId ?? 0) - 2000000000), userId: id);
+                    } catch (Exception e) { }
                 }
             }
         }

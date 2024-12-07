@@ -223,10 +223,10 @@ callbackManager.onMessageNew += (messageNew) =>
 
 callbackManager.onMessageEvent += (messageEvent) =>
 {
-    ButtonPayload buttonPayload = ButtonPayload.FromJson(messageEvent.Payload);
+    ButtonPayload? buttonPayload = FromJson(messageEvent.Payload);
 
-    VKButtonGUI.OnPressed(buttonPayload, messageEvent.PeerId ?? 0, messageEvent.ConversationMessageId??0, messageEvent.UserId ?? 0, messageEvent, database);
-    
+    if (buttonPayload is not null)
+        VKButtonGUI.OnPressed(buttonPayload, messageEvent.PeerId ?? 0, messageEvent.ConversationMessageId??0, messageEvent.UserId ?? 0, messageEvent, database);
 };
 
 

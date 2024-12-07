@@ -85,7 +85,7 @@ namespace MikoGPT.apis
             HttpClient httpClient,
             CancellationTokenSource? requestCancelToken = null)
         {
-            var message = new HttpRequestMessage(HttpMethod.Post, "https://api.deepai.org/make_me_a_pizza");
+            var message = new HttpRequestMessage(HttpMethod.Post, "https://api.deepai.org/make_me_a_sandwich");
             string userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36";
             var generatedApiKey = GetApiKey(userAgent);
             message.Headers.Add("api-key", generatedApiKey);

@@ -19,12 +19,11 @@ namespace MikoGPT
         public string Name { get; set; } = "null";
         public object? Value { get; set; }
 
-        public static ButtonPayload FromJson(string json) =>
+        public static ButtonPayload? FromJson(string json) =>
             JsonSerializer.Deserialize<ButtonPayload>(json, options: new()
             {
-                Converters = {new ObjectDeserializer()}
-            })
-            ?? throw new ArgumentException("Wrong payload!");
+                Converters = { new ObjectDeserializer() }
+            });
         public string ToJson() => JsonSerializer.Serialize(this, typeof(ButtonPayload), options: new()
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
