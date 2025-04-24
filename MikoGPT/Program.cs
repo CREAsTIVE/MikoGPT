@@ -22,8 +22,6 @@ using static MikoGPT.ButtonPayload;
 
 #region Initialization
 
-
-
 Logger.Instance = new Logger(/*"main.txt"*/);
 
 // Config file
@@ -113,6 +111,9 @@ Logger.Instance.Log("main", "Initializated web interface");
 
 // Console
 ConsoleCommandController consoleCommandController = new();
+Logger.Instance.Log("main", "Console command controller initialized");
+
+Logger.Instance.Log("main", "Initialization finished");
 #endregion
 
 

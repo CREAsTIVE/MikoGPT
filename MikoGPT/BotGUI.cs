@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using VkNet;
 using VkNet.Enums.SafetyEnums;
+using VkNet.Model;
 using VkNet.Model.GroupUpdate;
 using VkNet.Model.Keyboard;
 using static MikoGPT.ButtonPayload;
@@ -105,10 +106,11 @@ namespace MikoGPT
                     continue;
 
                 var choosableVariants = VKButtonChoosableVariantAttribute.BuildDictionary(property);
+				MessageKeyboardButton? button = null;
 
-                if (choosableVariants.Count > 0)
+				if (choosableVariants.Count > 0)
                 {
-                    keyboard[attribute.Position.y][attribute.Position.x] = new()
+                    button = new()
                     {
                         Color = KeyboardButtonColor.Default,
                         Action = new()
@@ -126,12 +128,12 @@ namespace MikoGPT
                 }
                 else
                 {
-                    keyboard[attribute.Position.y][attribute.Position.x] = (attribute, property.GetValue(data), property.PropertyType.Name) switch
+                    
+                    if (property.GetValue(data) is bool boolValue)
                     {
-                        (null, _, _) => null,
-                        (_, bool value, _) => new()
+                        button = new()
                         {
-                            Color = value ? KeyboardButtonColor.Positive : KeyboardButtonColor.Negative,
+                            Color = boolValue ? KeyboardButtonColor.Positive : KeyboardButtonColor.Negative,
                             Action = new()
                             {
                                 Label = attribute.DisplayName,
@@ -141,11 +143,14 @@ namespace MikoGPT
                                     actionType = ActionType.UpdateParameterToValue,
                                     objectType = objectType,
                                     Name = property.Name,
-                                    Value = !value
+                                    Value = !boolValue
                                 }.ToJson()
                             }
-                        },
-                        (_, _, "String") => new()
+                        };
+					}
+                    else if (property.GetValue(data) is string stringValue)
+                    {
+                        button = new()
                         {
                             Color = KeyboardButtonColor.Default,
                             Action = new()
@@ -159,11 +164,12 @@ namespace MikoGPT
                                     Name = property.Name
                                 }.ToJson()
                             }
-                        },
-                        _ => null,
-                    };
-                }
-            }
+                        };
+					}
+				}
+
+				keyboard[attribute.Position.y][attribute.Position.x] = button;
+			}
 
             var methods = data.GetType().GetMethods();
             foreach (var method in methods)

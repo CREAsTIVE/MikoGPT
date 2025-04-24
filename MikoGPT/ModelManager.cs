@@ -143,7 +143,7 @@ namespace MikoGPT
                     } catch (Exception e) 
                     {
                         if (e is GenerationException)
-                            throw e;
+							throw;
                         api.Reply(message, "Не удалось отправить изображение.");
                         var fileName = Databases.JsonDocsDatabase.GetRandomBase64Uid();
                         Logger.Instance?.Log("dalle2 ex", $"vk cringe, image saved in {fileName}");
@@ -160,7 +160,7 @@ namespace MikoGPT
         public class ChatGPT3_5 : LanguageModel
         {
             public static VKScript GetMessageChainScript = VKScript.FromFile("message-chain");
-            public string? Prequel { get; set; } = null;
+            public string Prequel { get; set; } = "";
             struct AuthorMessagePair
             {
                 public string Author;
